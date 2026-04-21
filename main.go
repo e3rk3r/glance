@@ -52,6 +52,8 @@ func main() {
 		log.Fatalf("Failed to initialize server: %v", err)
 	}
 
+	// Log the config file path being used, helpful when running multiple instances
+	log.Printf("Using config file: %s", configPath)
 	log.Printf("Starting glance v%s on %s:%d", version, cfg.Server.Host, cfg.Server.Port)
 
 	if err := srv.Start(); err != nil {
