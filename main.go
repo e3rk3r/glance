@@ -54,7 +54,14 @@ func main() {
 
 	// Log the config file path being used, helpful when running multiple instances
 	log.Printf("Using config file: %s", configPath)
-	log.Printf("Starting glance v%s on %s:%d", version, cfg.Server.Host, cfg.Server.Port)
+
+	// Include hostname in startup log to make it easier to identify which machine
+	// is running this instance when checking logs remotely
+	hostname, err := os.Hostname()
+	if err != nil {
+		hostname = "unknown"
+	}
+	log.Printf("Starting glance v%s on %s:%d (host: %s)", version, cfg.Server.Host, cfg.Server.Port, hostname)
 
 	if err := srv.Start(); err != nil {
 		log.Fatalf("Server encountered a fatal error: %v", err)
